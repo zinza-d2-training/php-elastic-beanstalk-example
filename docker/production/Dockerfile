@@ -28,6 +28,9 @@ RUN docker-php-ext-install gd
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Copy existing application directory contents
+COPY . /var/www
+
 # Add user for laravel application
 ARG DOCKER_GID
 ARG DOCKER_UID
@@ -36,12 +39,6 @@ RUN if [ ${DOCKER_GID:-0} -ne 0 ] && [ ${DOCKER_UID:-0} -ne 0 ]; then \
     adduser -u ${DOCKER_UID} -G www www --disabled-password &&\
     install -d -m 0755 -o www -g www /home/www \
 ;fi
-
-# Copy existing application directory contents
-COPY . /var/www
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
 
 ## Change current user to www
 #USER www
