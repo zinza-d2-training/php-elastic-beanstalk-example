@@ -40,7 +40,7 @@
             ],
             "mountPoints": [
                 {
-                    "sourceVolume": "api-source",
+                    "sourceVolume": "laravel-source",
                     "containerPath": "/var/www",
                     "readOnly": true
                 },
@@ -56,8 +56,7 @@
             ],
             "memoryReservation": 165,
             "links": [
-                "romu-api",
-                "romu-client"
+                "laravel"
             ]
         }
     ]
