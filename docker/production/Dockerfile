@@ -2,7 +2,6 @@ FROM php:8.1.7-fpm-alpine
 
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/www/
-COPY docker/production/docker-entrypoint.sh /var/www/
 
 # Set working directory
 WORKDIR /var/www
