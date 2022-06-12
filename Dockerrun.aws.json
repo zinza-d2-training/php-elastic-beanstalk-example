@@ -1,0 +1,64 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "volumes": [
+        {
+            "name": "laravel-source",
+            "host": {
+                "sourcePath": "/var/app/current"
+            }
+        },
+        {
+            "name": "nginx-conf",
+            "host": {
+                "sourcePath": "/var/app/current/docker/nginx/default.conf"
+            }
+        },
+        {
+            "name": "nginx-log",
+            "host": {
+                "sourcePath": "/var/app/current/docker/nginx/logs"
+            }
+        }
+    ],
+    "containerDefinitions": [
+        {
+            "name": "laravel",
+            "image": "109846724001.dkr.ecr.ap-southeast-1.amazonaws.com/laravel:production",
+            "environment": [
+            ],
+            "memoryReservation": 256
+        },
+        {
+            "name": "laravel-nginx",
+            "image": "nginx:1.17.9-alpine",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "mountPoints": [
+                {
+                    "sourceVolume": "api-source",
+                    "containerPath": "/var/www",
+                    "readOnly": true
+                },
+                {
+                    "sourceVolume": "nginx-conf",
+                    "containerPath": "/etc/nginx/conf.d/default.conf",
+                    "readOnly": true
+                },
+                {
+                    "sourceVolume": "nginx-log",
+                    "containerPath": "/var/log/nginx"
+                }
+            ],
+            "memoryReservation": 165,
+            "links": [
+                "romu-api",
+                "romu-client"
+            ]
+        }
+    ]
+}

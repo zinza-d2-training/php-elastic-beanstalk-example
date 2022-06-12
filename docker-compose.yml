@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+  nginx:
+    container_name: laravel-example-nginx
+    build: ./docker/local/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www
+      - ./docker/local/nginx/logs/.:/var/log/nginx
+    networks:
+      - laravel-example-network
+
+  laravel-example:
+    container_name: laravel-example-app
+    build:
+      context: .
+      dockerfile: ./docker/local/Dockerfile
+      args:
+        DOCKER_UID: ${DOCKER_UID:-0}
+        DOCKER_GID: ${DOCKER_GID:-0}
+    tty: true
+    stdin_open: true
+    command: sh ./docker/local/docker-entrypoint.sh
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel-example-network
+
+networks:
+  laravel-example-network:
+    driver: bridge

@@ -1,0 +1,17 @@
+branch-defaults:
+  main:
+    environment: laravel-production
+global:
+  application_name: laravel
+  branch: null
+  default_ec2_keyname: aws-eb-zinza-training
+  default_platform: ECS running on 64bit Amazon Linux 2
+  default_region: ap-southeast-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application
